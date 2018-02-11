@@ -1,10 +1,17 @@
 = Cassandra Data Modeling
 
+== https://wiki.apache.org/cassandra/DataModel[Introduction:]
 
+Cassandra is a partitioned row store, where rows are organized into tables with a required primary key.
+
+The first component of a table's primary key is the partition key; within a partition, rows are clustered by the remaining columns of the PK. Other columns may be indexed independent of the PK.
+
+This allows pervasive denormalization to "pre-build" resultsets at update time, rather than doing expensive joins across the cluster.
+ 
 
 == https://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling[Basic Rules of Cassandra Data Modeling]
  
- 
+
 ==  https://youtu.be/B_HTdrTgGNs[Introduction To Apache Cassandra with Patrick McFadin] 
 
 
