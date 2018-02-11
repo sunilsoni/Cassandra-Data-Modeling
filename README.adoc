@@ -24,4 +24,6 @@ This allows pervasive denormalization to "pre-build" resultsets at update time, 
 
 == https://www.youtube.com/watch?v=-zyZ35YyT_8[cassandra data modeling - Practical considerations @ netflix]
 
+Stackoverflow::
+https://stackoverflow.com/questions/17945677/cassandra-uuid-vs-timeuuid-benefits-and-disadvantages[Cassandra UUID vs TimeUUID benefits and disadvantages]
  
