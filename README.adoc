@@ -4,3 +4,11 @@
 
 == https://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling[Basic Rules of Cassandra Data Modeling]
  
+ 
+==  https://youtu.be/B_HTdrTgGNs[Introduction To Apache Cassandra with Patrick McFadin] 
+
+
+==  https://www.youtube.com/watch?v=tg6eIht-00M&t=2s[ Tech Talk: Cassandra Data Modeling with Patrick McFadin] 
+
+
+==  https://www.youtube.com/watch?v=N2zIlVhKXTc&t=29s[ Introduction to Cassandra Data Model | Edureka]
