@@ -21,3 +21,5 @@ This allows pervasive denormalization to "pre-build" resultsets at update time, 
 ==  https://www.youtube.com/watch?v=N2zIlVhKXTc&t=29s[ Introduction to Cassandra Data Model | Edureka]
 
 == https://www.youtube.com/watch?v=Vv3QJxAdjic[Midwest.io 2014 - Time Series with Apache Cassandra - Patrick McFadin]
+
+https://www.youtube.com/watch?v=-zyZ35YyT_8[cassandra data modeling - Practical considerations @ netflix]
