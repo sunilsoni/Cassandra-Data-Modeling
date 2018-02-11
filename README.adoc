@@ -12,3 +12,5 @@
 
 
 ==  https://www.youtube.com/watch?v=N2zIlVhKXTc&t=29s[ Introduction to Cassandra Data Model | Edureka]
+
+== https://www.youtube.com/watch?v=Vv3QJxAdjic[Midwest.io 2014 - Time Series with Apache Cassandra - Patrick McFadin]
