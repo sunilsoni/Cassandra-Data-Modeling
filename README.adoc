@@ -1,0 +1,6 @@
+= Cassandra Data Modeling
+
+
+
+== https://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling[Basic Rules of Cassandra Data Modeling]
+ 
