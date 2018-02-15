@@ -30,3 +30,71 @@ https://github.com/jaegertracing/jaeger/blob/master/plugin/storage/cassandra/sch
 Stackoverflow::
 https://stackoverflow.com/questions/17945677/cassandra-uuid-vs-timeuuid-benefits-and-disadvantages[Cassandra UUID vs TimeUUID benefits and disadvantages?]
  
+Sample Tables:
+
+CREATE TABLE sensor_readings (
+sensorID uuid,
+time_bucket int,
+timestamp bigint,
+reading decimal,
+PRIMARY KEY ((sensorID, time_bucket), timestamp)
+) WITH CLUSTERING ORDER BY (timestamp DESC);
+
+SELECT * FROM sensor_readings
+WHERE sensorID = 53755080-4676-11e4-916c-0800200c9a66
+AND time_bucket IN (1411840800, 1411844400)
+AND timestamp >= 1411841700
+AND timestamp <= 1411845300;
+
+
+CREATE TABLE IF NOT EXISTS ${keyspace}.traces (
+    trace_id        blob,
+    span_id         bigint,
+    span_hash       bigint,
+    parent_id       bigint,
+    operation_name  text,
+    flags           int,
+    start_time      bigint,
+    duration        bigint,
+    tags            list<frozen<keyvalue>>,
+    logs            list<frozen<log>>,
+    refs            list<frozen<span_ref>>,
+    process         frozen<process>,
+    PRIMARY KEY (trace_id, span_id, span_hash)
+)
+    WITH compaction = {
+        'compaction_window_size': '1', 
+        'compaction_window_unit': 'HOURS', 
+        'class': 'org.apache.cassandra.db.compaction.TimeWindowCompactionStrategy'
+    }
+    AND dclocal_read_repair_chance = 0.0
+    AND default_time_to_live = ${trace_ttl}
+    AND speculative_retry = 'NONE'
+    AND gc_grace_seconds = 10800; -- 3 hours of downtime acceptable on nodes
+	
+	
+CREATE TABLE IF NOT EXISTS ${keyspace}.duration_index (
+    service_name    text,      // service name
+    operation_name  text,      // operation name, or blank for queries without span name
+    bucket          timestamp, // time bucket, - the start_time of the given span rounded to an hour
+    duration        bigint,    // span duration, in microseconds
+    start_time      bigint,
+    trace_id        blob,
+    PRIMARY KEY ((service_name, operation_name, bucket), duration, start_time, trace_id)
+) WITH CLUSTERING ORDER BY (duration DESC, start_time DESC)
+    AND compaction = {
+        'compaction_window_size': '1', 
+        'compaction_window_unit': 'HOURS', 
+        'class': 'org.apache.cassandra.db.compaction.TimeWindowCompactionStrategy'
+    }
+    AND dclocal_read_repair_chance = 0.0
+    AND default_time_to_live = ${trace_ttl}
+    AND speculative_retry = 'NONE'
+    AND gc_grace_seconds = 10800; -- 3 hours of downtime acceptable on nodes
+	
+	
+	
+Sequential writes can cause hot spots: If the application tends to write or
+update a sequential block of rows at a time, the writes will not be distributed
+across the cluster. They all go to one node. This is frequently a problem for
+applications dealing with timestamped data
